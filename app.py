@@ -1,4 +1,5 @@
-from flask import Flask,render_template,request,jsonify
+from flask import Flask, render_template, request, jsonify
+
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
@@ -10,13 +11,12 @@ model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
 
 app = Flask(__name__)
 
-
 @app.route("/")
 def index():
     return render_template('chat.html')
 
 
-@app.route("/get", methods=['GET',"POST"])
+@app.route("/get", methods=["GET", "POST"])
 def chat():
     msg = request.form["msg"]
     input = msg
@@ -24,6 +24,7 @@ def chat():
 
 
 def get_Chat_response(text):
+
     # Let's chat for 5 lines
     for step in range(5):
         # encode the new user input, add the eos_token and return a tensor in Pytorch
@@ -40,4 +41,4 @@ def get_Chat_response(text):
 
 
 if __name__ == '__main__':
-     app.run()
+    app.run()
